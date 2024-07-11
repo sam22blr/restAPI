@@ -1,8 +1,8 @@
 Request method:	POST
-Request URI:	https://rahulshettyacademy.com/maps/api/place/add/json?key=qaclick123
+Request URI:	https://rahulshettyacademy.com/gq/graphql
 Proxy:			<none>
 Request params:	<none>
-Query params:	key=qaclick123
+Query params:	<none>
 Form params:	<none>
 Path params:	<none>
 Headers:		Accept=*/*
@@ -11,105 +11,35 @@ Cookies:		<none>
 Multiparts:		<none>
 Body:
 {
-    "accuracy": 50,
-    "name": "ANY",
-    "phone_number": "123 123 1234",
-    "address": "ANY",
-    "website": "https://rahulshettyacademy.com/client/dashboard/dash",
-    "language": "ANY",
-    "location": {
-        "lat": -38.38,
-        "lng": 33.42
-    },
-    "types": [
-        "Shoe Park",
-        "Shop"
-    ]
+    "query": "{\n  location(locationId: 11420) {\n    id\n  }\n}\n",
+    "variables": null
 }
 HTTP/1.1 200 OK
-Date: Thu, 11 Jul 2024 00:42:03 GMT
+Date: Thu, 11 Jul 2024 15:30:24 GMT
 Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: POST
-Access-Control-Max-Age: 3600
-Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With
-Content-Length: 194
+Cross-Origin-Embedder-Policy: require-corp
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+X-DNS-Prefetch-Control: off
+Expect-CT: max-age=0
+X-Frame-Options: SAMEORIGIN
+Strict-Transport-Security: max-age=15552000; includeSubDomains
+X-Download-Options: noopen
+X-Content-Type-Options: nosniff
+Origin-Agent-Cluster: ?1
+X-Permitted-Cross-Domain-Policies: none
+Referrer-Policy: no-referrer
+X-XSS-Protection: 0
+Content-Type: application/json; charset=utf-8
+Content-Length: 34
+ETag: W/"22-Yz0/4tsIkDWnCXX7MSQbR3ob3Kk"
 Keep-Alive: timeout=5, max=100
 Connection: Keep-Alive
-Content-Type: application/json;charset=UTF-8
 
 {
-    "status": "OK",
-    "place_id": "ae45309c5c940e9e278be487a8e63df4",
-    "scope": "APP",
-    "reference": "3076cf84e14eff400ff79b65b5214dd13076cf84e14eff400ff79b65b5214dd1",
-    "id": "3076cf84e14eff400ff79b65b5214dd1"
-}
-Request method:	GET
-Request URI:	https://rahulshettyacademy.com/maps/api/place/get/json?key=qaclick123&place_id=ae45309c5c940e9e278be487a8e63df4
-Proxy:			<none>
-Request params:	<none>
-Query params:	key=qaclick123
-				place_id=ae45309c5c940e9e278be487a8e63df4
-Form params:	<none>
-Path params:	<none>
-Headers:		Accept=*/*
-				Content-Type=application/json
-Cookies:		<none>
-Multiparts:		<none>
-Body:			<none>
-HTTP/1.1 200 OK
-Date: Thu, 11 Jul 2024 00:42:04 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: POST
-Access-Control-Max-Age: 3600
-Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With
-Content-Length: 241
-Keep-Alive: timeout=5, max=100
-Connection: Keep-Alive
-Content-Type: application/json;charset=UTF-8
-
-{
-    "location": {
-        "latitude": "-38.38",
-        "longitude": "33.42"
-    },
-    "accuracy": "50",
-    "name": "ANY",
-    "phone_number": "123 123 1234",
-    "address": "ANY",
-    "types": "Shoe Park,Shop",
-    "website": "https://rahulshettyacademy.com/client/dashboard/dash",
-    "language": "ANY"
-}
-Request method:	POST
-Request URI:	https://rahulshettyacademy.com/maps/api/place/delete/json?key=qaclick123
-Proxy:			<none>
-Request params:	<none>
-Query params:	key=qaclick123
-Form params:	<none>
-Path params:	<none>
-Headers:		Accept=*/*
-				Content-Type=application/json
-Cookies:		<none>
-Multiparts:		<none>
-Body:
-{
-    "place_id": "ae45309c5c940e9e278be487a8e63df4"
-}
-HTTP/1.1 200 OK
-Date: Thu, 11 Jul 2024 00:42:06 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: POST
-Access-Control-Max-Age: 3600
-Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With
-Content-Length: 15
-Keep-Alive: timeout=5, max=100
-Connection: Keep-Alive
-Content-Type: application/json;charset=UTF-8
-
-{
-    "status": "OK"
+    "data": {
+        "location": {
+            "id": 11420
+        }
+    }
 }

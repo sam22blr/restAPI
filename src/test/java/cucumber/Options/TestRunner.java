@@ -8,9 +8,8 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/java/features/PlaceValidations.feature",
 					glue = {"stepDefinitions"},
+					tags = "@location",
 					plugin = "json:target/jsonReports/cucumber-report.json")
 public class TestRunner {
 	
-	
-
 }

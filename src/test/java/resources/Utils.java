@@ -20,9 +20,19 @@ public class Utils {
 	public RequestSpecification requestSpectBuilder() throws IOException {
 		if (req == null) {
 			PrintStream log = new PrintStream(new FileOutputStream("log.txt"));
-			req = new RequestSpecBuilder().setBaseUri(getGlobalValue("baseUrl"))
-					.addQueryParam("key", "qaclick123")
-					.setContentType(ContentType.JSON)
+			req = new RequestSpecBuilder().setBaseUri(getGlobalValue("baseUrl")).addQueryParam("key", "qaclick123")
+					.setContentType(ContentType.JSON).addFilter(RequestLoggingFilter.logRequestTo(log))
+					.addFilter(ResponseLoggingFilter.logResponseTo(log)).build();
+			return req;
+		}
+		return req;
+	}
+
+	public RequestSpecification requestSpectBuilderGraphQL() throws IOException {
+		if (req == null) {
+			PrintStream log = new PrintStream(new FileOutputStream("log.txt"));
+			req = new RequestSpecBuilder().setBaseUri(getGlobalValue("graphQLUrl"))
+					.addHeader("Content-Type", "application/json").setContentType(ContentType.JSON)
 					.addFilter(RequestLoggingFilter.logRequestTo(log))
 					.addFilter(ResponseLoggingFilter.logResponseTo(log)).build();
 			return req;

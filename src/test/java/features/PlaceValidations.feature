@@ -20,3 +20,11 @@ Feature: Validate Place API
     When User "post" http request to "deletePlaceAPI"
     Then User gets a http success code as 200
     And User gets a "status" in response body as "OK"
+    
+  @location
+  Scenario: Verify graphQL location details
+  	Given User builds location payload
+  	Then User posts the location request
+
+  
+  #"{\n  location(locationId: 11420) {\n    id\n  }\n}\n"

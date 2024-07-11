@@ -70,4 +70,17 @@ public class PlaceValidationSteps extends Utils {
 		reqSpec = given().spec(requestSpectBuilder()).body(testData.deletePlace(place_id));
 	}
 
+  	
+  	@Given("User builds location payload")
+	public void user_builds_location_payload() throws IOException {
+		reqSpec = given().spec(requestSpectBuilderGraphQL()).body("{\"query\":\"{\\n  location(locationId: 11420) {\\n    id\\n  }\\n}\\n\",\"variables\":null}");
+	}
+	
+	@Given("User posts the location request")
+	public void user_posts_location_request() throws IOException {
+		respSpec = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
+		response = reqSpec.when().post("gq/graphql");
+		
+		System.out.println(getJsonPathValue(response, "data.location.id"));
+	}
 }
