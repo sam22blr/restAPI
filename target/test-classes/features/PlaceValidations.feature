@@ -25,6 +25,11 @@ Feature: Validate Place API
   Scenario: Verify graphQL location details
   	Given User builds location payload
   	Then User posts the location request
+  	
+  @createLocation
+  Scenario: Verify graphQL create location
+  	Given User builds create location payload
+  	Then User posts the create location request
 
   
   #"{\n  location(locationId: 11420) {\n    id\n  }\n}\n"

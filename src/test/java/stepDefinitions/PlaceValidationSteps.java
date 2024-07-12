@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,6 +15,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import pojo.ApiResponse;
+import pojo.LocationQL;
 import resources.EnumResources;
 import resources.TestData;
 import resources.Utils;
@@ -53,34 +57,64 @@ public class PlaceValidationSteps extends Utils {
 
 		assertEquals(getJsonPathValue(response, statusKey), expectedValue);
 	}
-	 
 
 	@Then("User verifies {string} using {string}")
 	public void user_verifies_using(String name, String method) throws IOException {
-	    // Write code here that turns the phrase above into concrete actions
+		// Write code here that turns the phrase above into concrete actions
 		place_id = getJsonPathValue(response, "place_id");
 		reqSpec = given().spec(requestSpectBuilder()).queryParam("place_id", place_id);
 		user_posts_http_request_to("GET", method);
 		System.out.println(getJsonPathValue(response, "name"));
-		//assertEquals(getJsonPathValue(response, "name"), name);
+		// assertEquals(getJsonPathValue(response, "name"), name);
 	}
-	
+
 	@Given("User builds delete payload")
 	public void delete_place() throws IOException {
 		reqSpec = given().spec(requestSpectBuilder()).body(testData.deletePlace(place_id));
 	}
 
-  	
-  	@Given("User builds location payload")
+	@Given("User builds location payload")
 	public void user_builds_location_payload() throws IOException {
-		reqSpec = given().spec(requestSpectBuilderGraphQL()).body("{\"query\":\"{\\n  location(locationId: 11420) {\\n    id\\n  }\\n}\\n\",\"variables\":null}");
+		LocationQL location = new LocationQL(11420);
+		reqSpec = given().spec(requestSpectBuilderGraphQL()).body(location.executeLocationQuery());
+
+		// reqSpec = given().spec(requestSpectBuilderGraphQL()).body("{\"query\":\"{\\n
+		// location(locationId: 11420) {\\n id\\n }\\n}\\n\",\"variables\":null}");
 	}
-	
+
 	@Given("User posts the location request")
 	public void user_posts_location_request() throws IOException {
 		respSpec = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
 		response = reqSpec.when().post("gq/graphql");
-		
+
+		System.out.println(response.asString());
 		System.out.println(getJsonPathValue(response, "data.location.id"));
+		System.out.println(getJsonPathValue(response, "data.location.name"));
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			ApiResponse apiResponse = objectMapper.readValue(response.asString(), ApiResponse.class);
+
+			// Access the data
+			LocationQL locationQL = apiResponse.getData().getLocation();
+			System.out.println("ID: " + locationQL.getId());
+			System.out.println("Name: " + locationQL.getName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Given("User builds create location payload")
+	public void user_create_location() throws IOException {
+		LocationQL location = new LocationQL("How", "are", "you");
+		reqSpec = given().spec(requestSpectBuilderGraphQL()).body(location.buildQueryMutation());
+	}
+
+	@Then("User posts the create location request")
+	public void user_post_create_location() {
+		respSpec = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
+		response = reqSpec.when().post("gq/graphql");
+
+		System.out.println(response.asString());
 	}
 }
